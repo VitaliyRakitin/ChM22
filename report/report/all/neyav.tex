@@ -1,0 +1,59 @@
+\section{Устойчивость нелинейной неявной схемы}
+
+\[
+\frac{v_{m}^{n+1} - v_m^n}{\tau}  -\frac{\left(v^2\right)_{m+1}^{n+1} - \left(v^2\right)_{m-1}^{n+1}}{4h} = \omega \tau \left(\frac{\left(v^2\right)_{m}^{n}v_{m+1}^{n+1} 
+- \left(\left(v^2\right)_{m}^{n} + \left(v^2\right)_{m-1}^{n}\right)v_{m}^{n+1} 
++ \left(v^2\right)_{m-1}^{n}v_{m-1}^{n+1}}{h^2}  
+\right)
+\]
+
+Лианиризуем наше уравнение. Пусть $w_m^n = v_m^n + \delta_m^n$ другое решение сеточной задачи, тогда подставим это решение в наше уравнение вычтем исходное. Затем выполним следующие равненства
+\[
+(v_m^n + \delta_m^n)^2 - (v_m^n)^2 = 2 v_m^n \delta_m^n
+\]
+Тогда с точностью до $O((\delta_{m}^{n})^2)$
+
+\[
+\frac{\delta_{m}^{n+1} - \delta_m^n}{\tau}  -\frac{2\delta_{m+1}^{n+1}v_{m+1}^{n+1} - 2\delta_{m-1}^{n+1}v_{m-1}^{n+1}}{4h} = \omega \tau \left(\frac{2\delta_{m}^{n}v_{m}^{n} v_{m+1}^{n+1} 
+- \left(2\delta_{m}^{n}v_{m}^{n} +2\delta_{m-1}^{n}v_{m-1}^{n}\right)v_{m}^{n+1} 
++ 2\delta_{m-1}^{n} v_{m-1}^{n} v_{m-1}^{n+1}}{h^2}  
+\right)
+\]
+
+Применим спектральный признак устойчивости. 
+Сделаем замену
+\[
+\delta_m^n = 
+(\lambda(\phi))^n e^{im\phi}
+\]
+Тогда
+
+\[
+\begin{split}
+\frac{\lambda^{n+1} e^{im\phi} - \lambda^{n} e^{im\phi} }{\tau}  -\frac{2\lambda^{n+1} e^{i(m+1)\phi} v_{m+1}^{n+1} - 2
+\lambda^{n+1} e^{i(m-1)\phi}  v_{m-1}^{n+1}}{4h} =\\
+= \omega \tau \left(\frac{2 \lambda^{n} e^{im\phi}v_{m}^{n} v_{m+1}^{n+1} 
+- \left(2\lambda^{n} e^{im\phi} v_{m}^{n} +2\lambda^{n} e^{i(m-1)\phi} v_{m-1}^{n}\right)v_{m}^{n+1} 
++ 2\lambda^{n} e^{i(m-1)\phi} v_{m-1}^{n} v_{m-1}^{n+1}}{h^2}  
+\right)
+\end{split}
+\]
+
+\[
+\frac{\lambda - 1 }{\tau}  - 2\lambda\frac{ e^{i\phi} v_{m+1}^{n+1} - 
+ e^{i\phi}  v_{m-1}^{n+1}}{4h} =
+ \omega \tau \left(\frac{2v_{m}^{n} v_{m+1}^{n+1} 
+- \left(2 v_{m}^{n} +2 e^{-i\phi} v_{m-1}^{n}\right)v_{m}^{n+1} 
++ 2 e^{-i\phi} v_{m-1}^{n} v_{m-1}^{n+1}}{h^2}  
+\right)
+\]
+\[
+\lambda = \frac{\frac{1 }{\tau} + 
+ \omega \tau \left(\frac{2v_{m}^{n} v_{m+1}^{n+1} 
+- \left(2 v_{m}^{n} +2 e^{-i\phi} v_{m-1}^{n}\right)v_{m}^{n+1} 
++ 2 e^{-i\phi} v_{m-1}^{n} v_{m-1}^{n+1}}{h^2}  
+\right)}{\frac{1}{\tau}  - 2\frac{ e^{i\phi} v_{m+1}^{n+1} - 
+ e^{i\phi}  v_{m-1}^{n+1}}{4h}}
+\]
+
+Преобразуем, найдём модуль $\lambda$, получим, что данная схема неустойчива

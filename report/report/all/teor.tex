@@ -1,0 +1,328 @@
+\section{Аппроксимация}
+
+Рассматривается уравнение переноса:
+\[
+\frac{\partial u}{\partial t} - \frac{1}{2}
+\frac{\partial u}{\partial x} = 0.
+\] 
+
+\begin{enumerate}
+\item Посчитаем апроксимацию для явной схемы (\ref{one1})
+
+\[
+v_m^{n+1} - \frac{1}{2} \left( \left(1 + \frac{\tau}{h} \right)v^n_{m+1} + \left(1 - \frac{\tau}{h} \right)v^n_{m-1}  \right) =
+\]
+\[
+= v_m^n + \tau {\dot v}_m^n + O(\tau^2) - \frac{1}{2} \left( \left(1 + \frac{\tau}{h} \right)\left(v_m^n + h {v'}_m^n + O(h^2)\right) +\left(1 - \frac{\tau}{h} \right) \left(v_m^n - h {v'}_m^n + O(h^2) \right)  \right) = 
+\]
+\[
+ = \tau \left({\dot v}_m^n    - \frac{1}{2}  {v'}_m^n \right) + O(\tau^2+h^2) = O(\tau^2+h^2).
+\]
+
+\item Для неявной схемы (\ref{two1})
+
+\[
+4h^2 v_m^n + \tau
+\left(\omega \tau -h \right) v_{m-1}^{n+1} -
+2\left(2h^2 + \omega \tau^2\right) v_{m}^{n+1} +
+\tau \left( \omega \tau + h \right) v_{m+1}^{n+1} = 
+\]
+\[
+=4h^2 v_m^n
++  \tau \left(\omega \tau -h \right) \left(v_m^n+ \tau {\dot v}_m^n - h {v'}_m^n - \tau h {\dot v'}_m^n + O(h^2 + \tau^2)\right)
+- 2\left(2h^2 + \omega \tau^2\right) \left( v_m^n+ \tau{\dot v}_m^n + O(\tau^2)\right) +\]
+\[
++ \tau \left( \omega \tau + h \right) \left(v_m^n+ \tau {\dot v}_m^n + h {v'}_m^n + \tau h {\dot v'}_m^n + O(h^2 + \tau^2)\right)
+= 
+\]
+\[
+=\cancel{4h^2 v_m^n}
++  \omega \tau^2  \left(v_m^n+ \tau {\dot v}_m^n - \cancel{h {v'}_m^n - \tau h {\dot v'}_m^n} + O(h^2 + \tau^2)\right)
+- \tau h   \left(\cancel{v_m^n+ \tau {\dot v}_m^n}   -  h {v'}_m^n - \tau h {\dot v'}_m^n + O(h^2 + \tau^2)\right) - 
+\]
+\[
+- 4h^2 \left( \cancel{v_m^n} + \tau{\dot v}_m^n + O(\tau^2)\right) + 2\omega \tau^2\left( v_m^n+ \tau{\dot v}_m^n + O(\tau^2)\right) 
++ \omega \tau^2 \left(v_m^n+ \tau {\dot v}_m^n + \cancel{h {v'}_m^n + \tau h {\dot v'}_m^n} + O(h^2 + \tau^2)\right) +
+\]
+\[
++
+\tau h \left(\cancel{v_m^n+ \tau {\dot v}_m^n} + h {v'}_m^n + \tau h {\dot v'}_m^n + O(h^2 + \tau^2)\right)
+= O(\tau^2 + \tau h^2)
+\]
+
+%\[
+%=
+%+  \omega \tau^2  \left(v_m^n+ \tau {\dot v}_m^n + O(h^2 + \tau^2)\right)
+%- \tau h   \left( -  h {v'}_m^n - \tau h {\dot v'}_m^n + O(h^2 + \tau^2)%\right) - 
+%\]
+%\[
+%- 4h^2 \left( \tau{\dot v}_m^n + O(\tau^2)\right) + 2\omega \tau^2\left( v_m^n+ \tau{\dot v}_m^n + O(\tau^2)\right) +
+%\]
+%\[
+%+ \omega \tau^2 \left(v_m^n+ \tau {\dot v}_m^n  + O(h^2 + \tau^2)\right) +
+%\tau h \left( h {v'}_m^n + \tau h {\dot v'}_m^n + O(h^2 + \tau^2)\right)
+%= 
+%\]
+\end{enumerate}
+
+
+
+\section{Дифференциальное приближение}
+\begin{enumerate}
+\item Дифференциальное приближение для явной схемы  (\ref{one}) с точностью до членов порядка $O\left(\tau^3+ h^3 +\frac{h^4}{\tau}\right) $
+\[
+v_t - \frac{1}{2} v_{ \overset{\circ}{x} } = \frac{h^2}{2\tau} v_{x \ol{x}}
+\]
+
+
+\[
+\dot v + \frac{\tau}{2} \ddot v  + \frac{\tau^2}{6} \dddot v + O\left(\tau^3\right) - \frac{1}{2} v' -  \frac{h}{4}v'' - \frac{h^2}{12} v''' + O\left(h^3\right) = 
+\frac{h^2}{2\tau} v'' + \frac{h^3}{4\tau} v''' + O\left(\frac{h^4}{\tau}\right) 
+\]
+\[
+\dot v - \frac{1}{2} v' - \frac{h^2}{2\tau} v'' = - \frac{\tau}{2} \ddot v  - \frac{\tau^2}{6} \dddot v  +  \frac{h}{4}v'' + \frac{h^2}{12} v''' 
+ + \frac{h^3}{4\tau} v'''' + O\left(\tau^3+ h^3 +\frac{h^4}{\tau}\right) 
+\]
+\[
+\dot v = \frac{1}{2} v' + O\left(\tau + h + \frac{h^2}{\tau}\right)
+\]
+\[
+\dot v' = \frac{1}{2} v'' + O\left(\tau + h + \frac{h^2}{\tau}\right)
+\]
+\[
+\dot v'' = \frac{1}{2} v''' + O\left(\tau + h + \frac{h^2}{\tau}\right)
+\]
+\[
+\ddot v = \frac{1}{2} \dot v' + O\left(\tau + h + \frac{h^2}{\tau}\right) = \frac{1}{4} v'' +  O\left(\tau + h + \frac{h^2}{\tau}\right) 
+\]
+\[
+\dddot v = \frac{1}{4} \dot v'' + O\left(\tau + h + \frac{h^2}{\tau}\right) = \frac{1}{8} v''' +  O\left(\tau + h + \frac{h^2}{\tau}\right) 
+\]
+
+
+\[
+\dot v - \frac{1}{2} v' - \frac{h^2}{2\tau} v'' = \left(\frac{h}{4} - \frac{\tau}{8} \right) v''  + \left(\frac{h^2}{12}  - \frac{\tau^2}{48} \right)  v'''   + \frac{h^3}{4\tau} v'''' + O\left(\tau^3+ h^3 +\frac{h^4}{\tau}\right) 
+\]
+
+\item Дифференциальное приближение для явной схемы  (\ref{two}) с точностью до членов порядка $O\left(\tau^3 +h^3 + \tau h^2\right)$
+\[
+v_t - \frac{1}{2}\hat{v}_{ \overset{\circ}{x} } = \frac{\omega \tau}{4} \hat{v}_{x \ol{x}}
+\]
+
+
+\[
+\dot v + \frac{\tau}{2} \ddot v  + \frac{\tau^2}{6} \dddot v + O\left(\tau^3\right) 
+- \frac{1}{2} v' -  \frac{h}{4}v'' - \frac{h^2}{12} v''' + O\left(h^3\right) = 
+ \frac{\omega \tau}{4} v'' +  \frac{\omega \tau h}{8} v''' + O\left(\tau h^2\right) 
+\]
+\[
+\dot v - \frac{1}{2} v' +  \frac{\omega \tau}{4} v'' =
+- \frac{\tau}{2} \ddot v  - \frac{\tau^2}{6} \dddot v 
+ +  \frac{h}{4}v'' + \frac{h^2}{12} v''' 
+ +  \frac{\omega \tau h}{8} v''' + 
+ O\left(\tau^3 +h^3 + \tau h^2\right)
+\]
+\[
+\dot v = \frac{1}{2} v' + O\left( \tau + h \right)
+\]
+\[
+\dot v' = \frac{1}{2} v'' + O\left( \tau + h \right)
+\]
+\[
+\dot v'' = \frac{1}{2} v''' + O\left( \tau + h \right)
+\]
+\[
+\ddot v = \frac{1}{2} \dot v' + O\left( \tau + h \right) = 
+\frac{1}{4} v'' + O\left( \tau + h \right)
+\]
+\[
+\dddot v = \frac{1}{4} \dot v'' + O\left( \tau + h \right) = 
+\frac{1}{8} v''' + O\left( \tau + h \right)
+\]
+\[
+\dot v - \frac{1}{2} v' +  \frac{\omega \tau}{4} v'' =
+ \left(\frac{h}{4}
+- \frac{\tau}{8} \right) v''  
+  + \left(\frac{h^2}{12} 
+ +  \frac{\omega \tau h}{8} - \frac{\tau^2}{48} \right) v'''  + 
+ O\left(\tau^3 +h^3 + \tau h^2\right)
+\]
+\end{enumerate}
+
+\section{Устойчивость}
+
+\begin{enumerate}
+\item Для явной схемы (\ref{one1})
+\[
+v_{m}^{n+1}  = \frac{1}{2}\left( \left(1 + \frac{\tau}{h}\right) v_{m+1}^n  + \left(1 - \frac{\tau}{h}\right) v_{m-1}^n \right)
+\]
+Сделаем замену
+\[
+v_m^n = 
+(\lambda(\phi))^n e^{im\phi}
+\]
+Тогда
+\[
+\lambda^{n+1} e^{im\phi} = \frac{1}{2}\left( \left(1 + \frac{\tau}{h}\right) \lambda^{n} e^{i(m+1)\phi}  + \left(1 - \frac{\tau}{h}\right) \lambda^{n} e^{i(m-1)\phi}  \right)
+\]
+Сократим всё на $\lambda^{n} e^{im\phi} $
+\[
+\lambda = \frac{1}{2}\left( \left(1 + \frac{\tau}{h}\right) e^{i\phi}  + \left(1 - \frac{\tau}{h}\right) e^{-i\phi}  \right)
+\]
+\[
+\lambda = \frac{1}{2}\left( e^{i\phi} +  e^{-i\phi} + \frac{\tau}{h} \left(e^{i\phi}  -  e^{-i\phi} \right) \right)
+\]
+\[
+\lambda = \cos\phi + \frac{i\tau}{h} \sin\phi
+\]
+\[
+| \lambda | = \sqrt{\cos^2\phi +  \frac{\tau^2}{h^2} \sin^2\phi} = 
+ \sqrt{1 +  (\frac{\tau^2}{h^2} - 1) \sin^2\phi} \le 1 \quad \Longleftrightarrow \quad -1 \le \frac{\tau^2}{h^2} - 1 \le 0
+\]
+\[
+0 \le \frac{\tau^2}{h^2} \le 1 \qquad \Longrightarrow \qquad  \tau^2 \le h^2 \qquad \Longrightarrow \qquad \tau \le h. 
+\]
+Таким образом, можем сделать вывод, что наша схема устойчива при условии $\tau \le h$.
+\item Для неявной схемы (\ref{two1})
+\[
+4h^2 v_m^n + \tau
+\left(\omega \tau -h \right) v_{m-1}^{n+1} -
+2\left(2h^2 + \omega \tau^2\right) v_{m}^{n+1} +
+\tau \left( \omega \tau + h \right) v_{m+1}^{n+1}= 0
+\]
+Аналогично предыдущему пункту сделаем замену
+\[
+v_m^n = 
+(\lambda(\phi))^n e^{im\phi}
+\]
+Тогда
+\[
+4h^2 \lambda^{n} e^{im\phi} + \tau
+\left(\omega \tau -h \right) \lambda^{n+1} e^{i(m-1)\phi} -
+2\left(2h^2 + \omega \tau^2\right) \lambda^{n+1} e^{im\phi} +
+\tau \left( \omega \tau + h \right) \lambda^{n+1} e^{i(m+1)\phi}= 0
+\]
+Сократим всё на $\lambda^{n+1} e^{im\phi} $
+\[
+\frac{4h^2}{\lambda} + \tau
+\left(\omega \tau -h \right)  e^{-i\phi} -
+2\left(2h^2 + \omega \tau^2\right) +
+\tau \left( \omega \tau + h \right)  e^{i\phi}= 0
+\]
+\[
+\frac{4h^2}{\lambda} + \omega \tau^2 
+\left(  e^{-i\phi} + e^{i\phi} \right)  -
+2\left(2h^2 + \omega \tau^2\right) +
+\tau h \left(  e^{i\phi} - e^{-i\phi} \right)   = 0
+\]
+\[
+\frac{4h^2}{\lambda} + 2\omega \tau^2 
+\cos\phi  -
+2\left(2h^2 + \omega \tau^2\right) +
+2 i\tau h \sin\phi  = 0
+\]
+\[
+\frac{4h^2}{\lambda} + 2\omega \tau^2 
+\cos\phi  -
+2\left(2h^2 + \omega \tau^2\right) +
+2 i\tau h \sin\phi  = 0
+\]
+\[
+-1 \le \lambda = \frac{2h^2}{2h^2 + \omega \tau^2 - \omega \tau^2 
+\cos\phi  -  i\tau h \sin\phi} \le 1
+\]
+Рассмотрим правый случай
+\[
+2h^2 \le 2h^2 + \omega \tau^2 - \omega \tau^2 
+\cos\phi  -  i\tau h \sin\phi 
+\]
+\[
+\omega \tau^2 
+\cos\phi  +  i\tau h \sin\phi \le \omega \tau^2 
+\]
+\[
+\cos\phi  +  \frac{i h}{\tau \omega} \sin\phi \le 1
+\]
+\[
+\cos^2\phi  +  \frac{h^2}{\tau^2 \omega^2} \sin^2\phi \le 1
+\]
+\[
+1  + \left(\frac{h^2}{\tau^2 \omega^2} - 1\right) \sin^2\phi \le 1
+\]
+\[
+\frac{h^2}{\tau^2 \omega^2} \le 1  \qquad \Longrightarrow \qquad
+h \le \tau \omega
+\]
+Рассмотрим левый случай
+\[
+-2h^2 \le 2h^2 + \omega \tau^2 - \omega \tau^2 
+\cos\phi  -  i\tau h \sin\phi 
+\]
+\[
+  \omega \tau^2 
+\cos\phi  +  i\tau h \sin\phi \le 4h^2 + \omega \tau^2 
+\]
+\[
+\cos\phi  +  \frac{i h}{\tau \omega}  \sin\phi \le \frac{4h^2}{\omega \tau^2 } + 1
+\]
+\[
+\cos^2\phi  +  \frac{h^2}{\tau^2 \omega^2}  \sin^2\phi \le \left(\frac{4h^2}{\omega \tau^2 } + 1\right)^2
+\]
+\[
+1  +  \left(\frac{h^2}{\tau^2 \omega^2} - 1\right)  \sin^2\phi \le \frac{16h^4}{\omega^2 \tau^4 } + \frac{8h^2}{\omega \tau^2 } + 1
+\]
+\[
+\left(\frac{h^2}{\tau^2 \omega^2} - 1\right)  \sin^2\phi \le \frac{16h^4}{\omega^2 \tau^4 } + \frac{8h^2}{\omega \tau^2 } 
+\]
+Так как мы уже выяснили, что
+\[
+\frac{h^2}{\tau^2 \omega^2} \le 1
+\]
+Получим
+\[
+|\sin\phi| \ge \sqrt{\frac{\frac{16h^4}{\omega^2 \tau^4 } + \frac{8h^2}{\omega \tau^2}}{1 - \frac{h^2}{\tau^2 \omega^2}}}
+\]
+Рассмотрим $\phi = \frac{\pi}{2}$
+\[
+1 \ge \frac{\frac{16h^4}{\omega^2 \tau^4 } + \frac{8h^2}{\omega \tau^2}}{1 - \frac{h^2}{\tau^2 \omega^2}}
+\]
+\[
+\frac{16h^4}{\omega^2 \tau^4 } + \frac{8h^2}{\omega \tau^2} +  \frac{h^2}{\tau^2 \omega^2} - 1 \le 0
+\]
+\[
+\frac{16h^4}{ \tau^4 } + (8\omega + 1) \frac{h^2}{\tau^2 } - \omega^2 \le 0
+\]
+Рассморим случай 
+\[
+\frac{16h^4}{ \tau^4 } + (8\omega + 1) \frac{h^2}{\tau^2 } - \omega^2 = 0
+\]
+и делаем замену $x = \frac{h^2}{\tau^2 } $
+\[
+16x^2 + (8\omega + 1) x - \omega^2 = 0
+\]
+\[
+D =  (8\omega + 1)^2 + 4 \cdot 16 \cdot \omega^2 = 128 \omega^2 + 16 \omega + 1
+\]
+\[
+x = \frac{- 8 \omega - 1 \pm \sqrt{128 \omega^2 + 16 \omega + 1}}{32}
+\]
+Значит 
+\[
+\frac{h^2}{\tau^2} \in \left[ \frac{- 8 \omega - 1 - \sqrt{128 \omega^2 + 16 \omega + 1}}{32},  \frac{- 8 \omega - 1 + \sqrt{128 \omega^2 + 16 \omega + 1}}{32}  \right]
+\]
+При $\omega = 1$
+\[
+\frac{h^2}{\tau^2} \in \left( 0,  0.095 \right)
+\]
+\[
+\frac{h}{\tau} \in \left( 0,  0.3 \right)
+\]
+При $\omega = 0.1$
+\[
+\frac{h^2}{\tau^2} \in \left( 0,  0.0053 \right)
+\]
+\[
+\frac{h}{\tau} \in \left( 0,  0.073 \right)
+\]
+Таким образом, мы можем подобрать такие $\tau$ и $h$, чтобы наша схема была устойчива в точке $\phi = \frac{\pi}{2}$, а~значит она условно устойчива.
+\end{enumerate}

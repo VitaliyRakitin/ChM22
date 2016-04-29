@@ -1,0 +1,37 @@
+
+\subsection{Метод Ньютона}
+
+Решение нелинейной системы уравнений методом Ньютона
+
+\[
+F(\ol{x}) = F(\ol{x}_0 + \Delta \ol{x}_1) \approx  F(\ol{x}_0) + \frac{\partial F}{\partial \ol{x}}\Bigg|_{\ol{x} = \ol{x}_0} \cdot \Delta \ol{x}_1
+\]
+
+Определим вектор приращений $\Delta \ol{x}_1$ из условия $F(\ol{x}) = 0$
+\[
+\frac{\partial F}{\partial \ol{x}}\Bigg|_{\ol{x} = \ol{x}_0} \cdot \Delta \ol{x}_1 =  -  F(\ol{x}_0);
+\] 
+
+Или в развёрнутом виде
+\[
+\sum\limits_{j=1}^{n} \left( \frac{\partial f_i(\ol{x}_0)}{\partial x_j } \right) \cdot \Delta \ol{x}_1 = -  f_i(\ol{x}_0),
+\]\[
+\frac{\partial f_i(\ol{x}_0)}{\partial x_j }  = \frac{f_i(x_1(0), \dots, x_{j-1}(0), x_j(0) + \e, x_{j+1}(0), \dots, x_n(0)) - f_i(\ol{x}_0)}{\e}
+\]
+
+Обозначим матрицу Якоби
+\[
+F'(\ol{x}_0) = \frac{\partial F}{\partial \ol{x}}\Bigg|_{\ol{x} = \ol{x}_0} \equiv \Bigg|\Bigg|\frac{\partial f_i(\ol{x}_0)}{\partial x_j } \Bigg|\Bigg| 
+\]
+
+Значит,
+\[
+F'(\ol{x}_0) \cdot \Delta \ol{x}_1 = -  F(\ol{x}_0) 
+\]
+\[
+\Delta \ol{x}_1 = \ol{x}_1 - \ol{x}_0 = -  \left( F'(\ol{x}_0) \right)^{-1} \cdot F(\ol{x}_0) 
+\]
+\[
+\ol{x}_1  = \ol{x}_0 -  \left( F'(\ol{x}_0) \right)^{-1} \cdot F(\ol{x}_0) 
+\]
+

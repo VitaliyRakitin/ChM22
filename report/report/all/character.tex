@@ -1,0 +1,55 @@
+\newpage
+\subsection{Характеристики}
+
+\subsubsection{Лиинейный случай}
+\[
+\frac{\partial u}{\partial t} - \frac{1}{2}
+\frac{\partial u}{\partial x} = 0
+\]
+
+Составим характеристическую систему
+\[
+\frac{dt}{1} = \frac{dx}{ - \frac{1}{2}} 
+\]
+
+\begin{equation}\label{harr_lin}
+t = -2x + C_1.
+\end{equation}
+
+
+\subsubsection{Нелинейный случай}
+\[
+\frac{\partial u}{\partial t} - \frac{1}{2}
+\frac{\partial u^2}{\partial x} = 0
+\]
+
+\[
+\frac{\partial u}{\partial t} - u
+\frac{\partial u}{\partial x} = 0
+\]
+
+Составим характеристическую систему
+\[
+\frac{dt}{1} = \frac{dx}{-u} = \frac{du}{0}
+\]
+
+Значит, получим уравнения
+\[
+u = C_1, \qquad x + u t = C_2
+\]
+начальное значение (\ref{gran}):
+значит 
+\[
+C_2 =  \sigma;\qquad
+C_1 = \phi(\xi) = u_0(\xi)= 
+\begin{cases}
+0,& \text{если} \quad \xi \le 0, \\
+4\xi,& \text{если} \quad 0 < \xi \le 0.25, \\
+1,& \text{если} \quad \xi > 0.25;
+\end{cases}
+\]
+
+Тогда
+\begin{equation}\label{harr_nonlin}
+x + \phi(\xi)t = \xi \quad \Longrightarrow \quad x = -\phi(\xi)t + \xi.
+\end{equation}

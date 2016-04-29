@@ -1,0 +1,187 @@
+\newpage
+\section{Расчёт линейной задачи}
+
+\subsection{Постановка задачи}
+\[
+F(u) = -\frac{1}{2} u
+\]
+
+Рассматриваются явная и неявная схемы
+\begin{equation}\label{one}
+v_t + (F(v))_{ \overset{\circ}{x} } = \frac{h^2}{2\tau} v_{x \ol{x}}
+\end{equation}
+
+\begin{equation}\label{two}
+v_t + (F(\hat{v}))_{ \overset{\circ}{x} } = \omega \tau \left((F'_v(v))^2 \hat{v}_x \right)_{\ol{x}}
+\end{equation}
+для численного решения уравнения переноса 
+\[
+\frac{\partial u}{\partial t} - \frac{1}{2} 
+\frac{\partial u}{\partial x} = 0
+\]
+в области
+\begin{equation}\label{line}
+Q_t = \{(t,x): \quad 0<t \le 1, \quad -1 \le x \le 1 \}.
+\end{equation}
+
+\subsubsection{Граничные условия}
+\begin{enumerate}
+\item на прямой $t = 0$ (при $-1 \le x \le 1$) определена функция
+\begin{equation}\label{gran}
+u_0(x) = 
+\begin{cases}
+0,& \text{если} \quad x \le 0, \\
+4x,& \text{если} \quad 0 < x \le 0.25, \\
+1,& \text{если} \quad x > 0.25;
+\end{cases}
+\end{equation}
+\item\label{x-1} на прямой $x = -1$ ввиду постоянства решения на характеристиках "--- прямых вида $t = -2x + C$ (см.\ref{harr_lin}), на~множестве $t \in (0,1)$:
+\[
+u(t,-1) = u_0(x \le 0) = 0;
+\]
+\item на прямой $x = 1$, аналогично п.\ref{x-1}:
+\[
+u(t,1) = u_0(x > 0.25) = 1.
+\]
+\end{enumerate}
+
+В условиях задачи использованы следующие обозначения
+\[
+g_x = \frac{g_{m+1}^n - g_m^n}{h} \qquad 
+g_{\overset{\circ}{x}} = \frac{g_{m+1}^n - g_{m-1}^n}{2h} \qquad
+g_{\ol{x}} = \frac{g_{m}^n - g_{m-1}^n}{h} \qquad
+(\hat{v})_{m}^n = v_{m}^{n+1}
+\]
+
+\subsection{Преобразование схем}
+Преобразуем уравнение (\ref{one}) к более удобному виду
+
+\[
+((v_x)_{\ol{x}})_m^n = \frac{(v_x)_{m}^n - (v_x)_{m-1}^n}{h} = \frac{\frac{v_{m+1}^n - v_{m}^n}{h} - \frac{v_{m}^n - v_{m-1}^n}{h}}{h} = \frac{v_{m+1}^n - 2v_{m}^n + v_{m-1}^n}{h^2} 
+\]
+
+\[
+(F(v))_{ \overset{\circ}{x}} = 
+-\frac{1}{2}v_{ \overset{\circ}{x} } =
+-\frac{ v_{m+1}^n - v_{m-1}^n}{4h}
+\]
+Значит
+\[
+\frac{v_{m}^{n+1} - v_m^n}{\tau} -  \frac{v_{m+1}^n - \frac{1}{2} v_{m-1}^n}{4h} = \frac{h^2}{2\tau} \frac{v_{m+1}^n - 2v_{m}^n + v_{m-1}^n}{h^2} 
+\]
+
+\[
+2 \left( v_{m}^{n+1} - v_m^n \right) -  \frac{\tau}{2h} \left(v_{m+1}^n -  v_{m-1}^n \right) = v_{m+1}^n - 2v_{m}^n + v_{m-1}^n
+\]
+
+
+\[
+ v_{m}^{n+1}  =  \frac{\tau}{2h} \left(v_{m+1}^n -  v_{m-1}^n \right) + \frac{1}{2}v_{m+1}^n  + \frac{1}{2}v_{m-1}^n
+\]
+
+\begin{align}\label{one1}
+\boxed{
+v_{m}^{n+1}  = \frac{1}{2}\left( \left(1 + \frac{\tau}{h}\right) v_{m+1}^n  + \left(1 - \frac{\tau}{h}\right) v_{m-1}^n \right)
+}
+\tag{\ref{one}*}
+\end{align}
+Преобразуем уравнение (\ref{two}) к более удобному виду
+\[
+\left(F'_v(v)\right)^2 = \left(\left(-\frac{1}{2}v\right)'_v \right)^2 = \left(-\frac{1}{2}\right)^2 =\frac{1}{4}	
+\]
+
+\[
+\left(\hat{v}_x\right)_{\ol{x}} = 
+\left(\left(v_{m}^{n+1}\right)_x\right)_{\ol{x}} = 
+\frac{(v_x)_{m}^{n+1} - (v_x)_{m-1}^{n+1}}{h} =  
+\frac{\frac{v_{m+1}^{n+1} - v_{m}^{n+1}}{h}-\frac{v_{m}^{n+1} - v_{m-1}^{n+1}}{h}}{h} =
+\frac{v_{m+1}^{n+1} - 2v_{m}^{n+1} + v_{m-1}^{n+1}}{h^2}
+\]
+
+\[
+(F(\hat{v}))_{ \overset{\circ}{x} } = 
+-  \frac{v_{m+1}^{n+1} - v_{m-1}^{n+1}}{4h}
+\]
+
+Соответственно,
+\[
+\frac{v_{m}^{n+1} - v_m^n}{\tau} - \frac{v_{m+1}^{n+1} - v_{m-1}^{n+1}}{4h} = \omega \tau \left( \frac{1}{4} 
+\frac{v_{m+1}^{n+1} - 2v_{m}^{n+1} + v_{m-1}^{n+1}}{h^2} \right)
+\]
+
+\[
+4h^2\left( v_{m}^{n+1} - v_m^n \right)- \tau h \left(v_{m+1}^{n+1} - v_{m-1}^{n+1}\right)= \omega \tau^2 \left(v_{m+1}^{n+1} - 2v_{m}^{n+1} + v_{m-1}^{n+1} \right)
+\]
+
+\begin{align}\label{two1}
+\boxed{
+4h^2 v_m^n + \tau
+\left(\omega \tau -h \right) v_{m-1}^{n+1} -
+2\left(2h^2 + \omega \tau^2\right) v_{m}^{n+1} +
+\tau \left( \omega \tau + h \right) v_{m+1}^{n+1}= 0
+}
+ \tag{\ref{two}*}
+\end{align}
+
+Нормируем схему для использования метода прогонки
+
+\begin{align}
+\boxed{
+\frac{2h^2 }{\left(2h^2 + \omega \tau^2\right)}v_m^n -
+\frac{\tau\left(\omega \tau -h \right)}{2\left(2h^2 + \omega \tau^2\right) } v_{m-1}^{n+1} +
+v_{m}^{n+1} -
+\frac{\tau \left( \omega \tau + h \right)}{2\left(2h^2 + \omega \tau^2\right) } v_{m+1}^{n+1}= 0
+}
+\end{align}
+
+Тогда получим систему вида $G_i = G_i(\hat{v})$:
+\[
+\begin{cases}
+G_0 = -
+\frac{2h^2 }{\left(2h^2 + \omega \tau^2\right)} v_0 +
+\hat{v}_0 -
+\frac{\tau \left( \omega \tau + h \right)}{2\left(2h^2 + \omega \tau^2\right) } \hat{v}_1, \quad m = 0;\\
+G_m = 
+-\frac{2h^2 }{\left(2h^2 + \omega \tau^2\right)}v_m -
+\frac{\tau\left(\omega \tau -h \right)}{2\left(2h^2 + \omega \tau^2\right) } \hat{v}_{m-1} +
+\hat{v}_{m} -
+\frac{\tau \left( \omega \tau + h \right)}{2\left(2h^2 + \omega \tau^2\right) } \hat{v}_{m+1}, \quad m = 1,\dots, M - 1;\\
+G_M = -
+\frac{2h^2 }{\left(2h^2 + \omega \tau^2\right)}v_{M-1} -
+\frac{\tau\left(\omega \tau -h \right)}{2\left(2h^2 + \omega \tau^2\right) } \hat{v}_{M-1} +
+\hat{v}_{M}, \quad m = M.
+\end{cases}
+\]
+\[
+\begin{cases}
+G_0 = A v_0 +
+\hat{v}_0 +
+C \hat{v}_1, & m = 0;\\
+G_m = 
+A v_m +
+B \hat{v}_{m-1} +
+\hat{v}_{m}+
+C \hat{v}_{m+1}, & m = 1,\dots, M - 1;\\
+G_M = 
+A v_{M-1} +
+B \hat{v}_{M-1} +
+\hat{v}_{M}, & m = M.
+\end{cases}
+\]
+\[
+A = - \frac{2h^2 }{\left(2h^2 + \omega \tau^2\right)}, \qquad B = -\frac{\tau\left(\omega \tau -h \right)}{2\left(2h^2 + \omega \tau^2\right) }, \qquad  C = -\frac{\tau\left(\omega \tau +h \right)}{2\left(2h^2 + \omega \tau^2\right)}
+\]
+
+
+Найдём матрицу Якоби
+
+\[
+J =  \begin{pmatrix}
+        1 & C & 0 &\dots & 0 & 0 \\
+        B & 1 & C & 0 & \dots & 0 \\
+        0 & B & 1 & C & \dots & 0 \\
+		\vdots& & \ddots&\ddots &\ddots & \vdots \\
+        0 &  \dots & 0 & B & 1 & C \\
+        0 & 0 & \dots & 0 & B & 1\\
+    \end{pmatrix}
+\]

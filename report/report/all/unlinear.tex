@@ -1,0 +1,165 @@
+\newpage
+\section{Расчёт нелинейной задачи}
+
+\subsection{Постановка задачи}
+\[
+F(u) = -\frac{1}{2} u^2
+\]
+
+Аналагично линейному случаю рассматриваются явная и неявная схемы (\ref{one}) и (\ref{two}) для численного решения уравнения  
+\[
+\frac{\partial u}{\partial t} - \frac{1}{2} 
+\frac{\partial u^2}{\partial x} = 0
+\]
+в области (\ref{line}).  
+
+\subsubsection{Граничные условия}
+\begin{enumerate}
+\item на прямой $t = 0$ (при $-1 \le x \le 1$) определена функция (\ref{gran});
+\item на прямой $x = -1$, ввиду постоянства решения на характеристиках (см.\ref{harr_nonlin}) "--- прямых вида 
+\[
+x = -\phi(\xi)t + \xi; \qquad
+\phi(\xi) = 
+\begin{cases}
+0,& \text{если} \quad \xi \le 0, \\
+4\xi,& \text{если} \quad 0 < \xi \le 0.25, \\
+1,& \text{если} \quad \xi > 0.25.
+\end{cases}
+\]
+Значит,
+\[
+u(t,-1) = 0;
+\]
+\item на прямой $x = 1$, аналогично
+\[
+u(t,1) = 1.
+\] 
+\end{enumerate}
+
+\subsection{Преобразование схем}
+Преобразуем уравнение (\ref{one}) к более удобному виду
+\[
+\frac{v_{m}^{n+1} - v_m^n}{\tau} -  \frac{\left(v^2\right)_{m+1}^n -  \left(v^2\right)_{m-1}^n}{4h} = \frac{h^2}{2\tau} \frac{v_{m+1}^n - 2v_{m}^n + v_{m-1}^n}{h^2} 
+\]
+
+\begin{align}\label{one2}
+\boxed{
+ v_{m}^{n+1}  =  \frac{\tau}{2h} \left( \left(v^2\right)_{m+1}^n -   \left(v^2\right)_{m-1}^n \right) + \frac{1}{2}v_{m+1}^n  + \frac{1}{2}v_{m-1}^n 
+}
+\tag{\ref{one}**}
+\end{align}
+
+Преобразуем уравнение (\ref{two}) к более удобному виду
+\[
+\left(F'_v(v)\right)^2 = \left(\left(-\frac{1}{2}v^2\right)'_v \right)^2 = v^2	
+\]
+
+\begin{equation} \notag
+\begin{split}
+\left(v^2\hat{v}_x\right)_{\ol{x}} &= 
+\left(\left(v^2\right)_{m}^{n}\left(v_{m}^{n+1}\right)_x\right)_{\ol{x}} = 
+\frac{\left(v^2\right)_{m}^{n}(v_x)_{m}^{n+1} - \left(v^2\right)_{m-1}^{n}(v_x)_{m-1}^{n+1}}{h} = \\ 
+&= \frac{\left(v^2\right)_{m}^{n}v_{m+1}^{n+1} 
+- \left(\left(v^2\right)_{m}^{n} + \left(v^2\right)_{m-1}^{n}\right)v_{m}^{n+1} 
++ \left(v^2\right)_{m-1}^{n}v_{m-1}^{n+1}}{h^2} 
+\end{split}
+\end{equation}
+
+\[
+(F(\hat{v}))_{ \overset{\circ}{x} } = 
+-\frac{1}{2}\hat{v}_{ \overset{\circ}{x}}^2 =
+-\frac{\left(v^2\right)_{m+1}^{n+1} - \left(v^2\right)_{m-1}^{n+1}}{4h}
+\]
+
+Соответственно,
+\[
+\frac{v_{m}^{n+1} - v_m^n}{\tau}  -\frac{\left(v^2\right)_{m+1}^{n+1} - \left(v^2\right)_{m-1}^{n+1}}{4h} = \omega \tau \left(\frac{\left(v^2\right)_{m}^{n}v_{m+1}^{n+1} 
+- \left(\left(v^2\right)_{m}^{n} + \left(v^2\right)_{m-1}^{n}\right)v_{m}^{n+1} 
++ \left(v^2\right)_{m-1}^{n}v_{m-1}^{n+1}}{h^2}  
+\right)
+\]
+
+\begin{equation} \label{two2}
+\boxed{
+\begin{split}
+4h^2\left( v_{m}^{n+1} - v_m^n \right) &-
+\tau h\left(\left(v^2\right)_{m+1}^{n+1} - \left(v^2\right)_{m-1}^{n+1}\right) - \\
+&- 4 \omega \tau^2 \left(\left(v^2\right)_{m}^{n}v_{m+1}^{n+1} 
+- \left(\left(v^2\right)_{m}^{n} + \left(v^2\right)_{m-1}^{n}\right)v_{m}^{n+1} 
++ \left(v^2\right)_{m-1}^{n}v_{m-1}^{n+1}\right)
+ = 0
+\end{split}
+}
+\tag{\ref{two}**}
+\end{equation}
+
+
+
+Нормируем схему для использования метода прогонки
+
+\[
+\begin{split}
+-4h^2 v_m^n 
++\left(4 \omega \tau^2\left(v^2\right)_{m-1}^{n}
+v_{m-1}^{n+1} +
+\tau h\left(v^2\right)_{m-1}^{n+1}\right) +
+ \left(4h^2  + 4 \omega \tau^2  \left(\left(v^2\right)_{m}^{n} + \left(v^2\right)_{m-1}^{n}\right) \right) v_{m}^{n+1} 
++\\
++ \left( 4 \omega \tau^2 \left(v^2\right)_{m}^{n}
+v_{m+1}^{n+1} 
+- \tau h\left(v^2\right)_{m+1}^{n+1} \right)
+ = 0
+\end{split}
+\]
+Для упрощения внешнего вида схемы заменим все константы на конкретном шаге вычисления на 
+\[
+A[M] = \frac{4 \omega \tau^2 \left(v^2\right)_{M}^{n}}{4h^2  + 4 \omega \tau^2  \left(\left(v^2\right)_{m}^{n} + \left(v^2\right)_{m-1}^{n}\right)}, \quad B = \frac{\tau h}{4h^2  + 4 \omega \tau^2  \left(\left(v^2\right)_{m}^{n} + \left(v^2\right)_{m-1}^{n}\right)}, \quad C = \frac{-4h^2}{4h^2  + 4 \omega \tau^2  \left(\left(v^2\right)_{m}^{n} + \left(v^2\right)_{m-1}^{n}\right)}
+\]
+Тогда наша схема принимает вид
+\[
+C v_m^n 
++\left(A[m-1] v_{m-1}^{n+1} +
+B \left(v^2\right)_{m-1}^{n+1}\right) +
+v_{m}^{n+1} 
++ \left(A[m]
+v_{m+1}^{n+1} 
+- B \left(v^2\right)_{m+1}^{n+1} \right)
+ = 0
+\]
+
+Теперь получим систему вида $G_i = G_i(\hat{v})$:
+
+\[
+\begin{cases}
+G_0 = Cv_0 +
+\hat{v}_{0}
++ \left(A[0]
+\hat{v}_{1}
+- B \hat{v}^2_{1} \right), & m = 0;\\
+G_m = C v_m
++\left(A[m-1] \hat{v}_{m-1} +
+B \hat{v}^2_{m-1}\right) +
+\hat{v}_{m} 
++ \left(A[m]
+\hat{v}_{m+1}
+- B \hat{v}^2_{m+1} \right),
+ & m = 1,\dots, M - 1;\\
+G_M = C v_M
++\left(A[M-1] \hat{v}_{M-1} +
+B \hat{v}^2_{M-1}\right) +
+\hat{v}_{M}, & m = M.
+\end{cases}
+\]
+
+Найдём матрицу Якоби
+
+\[
+J =  \begin{pmatrix}
+        1 &  A[0] - 2B\hat{v}_1 & 0 &\dots & 0  \\
+        A[0] + B\hat{v}_0  & 1 & A[1] - 2B\hat{v}_2 & 0 & \dots \\
+        0 & A[1] + B\hat{v}_1  & 1 & A[2] - 2 B\hat{v}_3 &  \dots  \\
+		\vdots& & \ddots&\ddots &\ddots  \\
+        0 &  \dots & A[M-2] + B\hat{v}_{M-2}  & 1 & A[M-1] -2 B\hat{v}_{M}  \\
+        0 &  \dots & 0 & A[M-1] + B\hat{v}_{M-1} & 1\\
+    \end{pmatrix}
+\]
